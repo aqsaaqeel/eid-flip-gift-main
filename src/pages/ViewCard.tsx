@@ -121,7 +121,7 @@ const ViewCard = () => {
         <div className="mb-4 mt-4">
           <Link
             to="/"
-            className="inline-flex items-center text-gray-600 hover:text-gray-900"
+            className="inline-flex items-center text-gray-600 hover:text-gray-900 hidden"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Create your own card

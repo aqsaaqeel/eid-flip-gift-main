@@ -51,12 +51,12 @@ const Card: React.FC<CardProps> = ({
   return (
     <div
       ref={cardRef}
-      className="relative w-full max-w-md aspect-[3/4] perspective"
+      className="relative w-full max-w-md aspect-[3/4] perspective rounded-lg overflow-hidden"
     >
       <SparkleTrail trigger={isFlipped} boundsRef={cardRef} />
 
       <div
-        className="relative w-full h-full transition-transform duration-700 preserve-3d"
+        className="relative w-full h-full transition-transform duration-700 preserve-3d rounded-lg"
         style={{
           transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
           transformStyle: "preserve-3d",
@@ -64,7 +64,7 @@ const Card: React.FC<CardProps> = ({
       >
         {/* FRONT SIDE */}
         <div
-          className="absolute w-full h-full backface-hidden islamic-pattern flex flex-col items-center justify-center p-6 sm:p-8"
+          className="absolute w-full h-full backface-hidden islamic-pattern flex flex-col items-center justify-center p-6 sm:p-8 rounded-lg"
           style={{
             backfaceVisibility: "hidden",
             transform: "rotateY(0deg)",
@@ -81,9 +81,8 @@ const Card: React.FC<CardProps> = ({
               </div>
             </div>
           </div>
-
-          <div className="relative z-10 flex flex-col items-center text-center space-y-5 mt-1">
-            <div className="flex space-x-10 justify-center mb-4">
+          <div className="relative z-10 flex flex-col items-center text-center space-y-5 mt-1 mx-6">
+            <div className="flex space-x-10 justify-center mb-4 mx-6 ml-6">
               <div className="lantern scale-75 -translate-x-6">
                 <div className="lantern-string"></div>
                 <div className="lantern-top"></div>
@@ -91,6 +90,7 @@ const Card: React.FC<CardProps> = ({
                   <div className="lantern-glow"></div>
                 </div>
               </div>
+              <div className="invisible">lantern</div>
               <div
                 className="lantern scale-75 translate-x-6"
                 style={{ animationDelay: "0.5s" }}

@@ -173,11 +173,13 @@
 
 .lantern {
   @apply relative;
+  animation: float-lantern 4s ease-in-out infinite;
+
 }
 
 .lantern-body {
   @apply relative w-12 h-16 bg-eid-gold rounded-b-3xl rounded-t-lg opacity-90 shadow-lg;
-  animation: float-lantern 4s ease-in-out infinite;
+  /* animation: float-lantern 4s ease-in-out infinite; */
 }
 
 .lantern-top {

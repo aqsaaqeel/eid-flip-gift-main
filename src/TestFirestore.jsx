@@ -16,8 +16,6 @@ const TestFirestore = () => {
 
     testFirestore();
   }, []);
-
-  return <p>Testing Firestore...</p>;
 };
 
 export default TestFirestore;
