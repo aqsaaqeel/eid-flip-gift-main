@@ -192,7 +192,7 @@ const ViewCard = () => {
               </div>
 
               <div className="border-t border-gray-100 pt-6">
-                <Link to="/create">
+                <Link to="/">
                   <Button className="w-full bg-eid-gold hover:bg-opacity-90 text-white">
                     <Heart className="mr-2 h-4 w-4" />
                     Create Your Own Card
