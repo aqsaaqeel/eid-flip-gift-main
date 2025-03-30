@@ -1,61 +1,62 @@
-
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { CardData, generateCardId, saveCard } from '../utils/cardUtils';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { useToast } from '@/components/ui/use-toast';
-import CardPreview from './CardPreview';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { CardData, generateCardId, saveCard } from "../utils/cardUtils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
+import CardPreview from "./CardPreview";
 
 const CardForm: React.FC = () => {
-  const [formData, setFormData] = useState<Omit<CardData, 'id' | 'createdAt'>>({
-    senderName: '',
-    receiverName: '',
-    message: '',
-    upiId: ''
+  const [formData, setFormData] = useState<Omit<CardData, "id" | "createdAt">>({
+    senderName: "",
+    receiverName: "",
+    message: "",
+    upiId: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [validationErrors, setValidationErrors] = useState<
+    Record<string, string>
+  >({});
   const [showPreview, setShowPreview] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
   const validateForm = (): boolean => {
     const errors: Record<string, string> = {};
-    
+
     if (!formData.senderName.trim()) {
-      errors.senderName = 'Your name is required';
+      errors.senderName = "Your name is required";
     }
-    
+
     if (!formData.receiverName.trim()) {
-      errors.receiverName = 'Recipient name is required';
+      errors.receiverName = "Recipient name is required";
     }
-    
-    if (!formData.message.trim()) {
-      errors.message = 'Please add a message';
-    } else if (formData.message.length > 100) {
-      errors.message = 'Message must be less than 100 characters';
+
+    if (formData.message.length > 100) {
+      errors.message = "Message must be less than 100 characters";
     }
-    
+
     if (!formData.upiId.trim()) {
-      errors.upiId = 'UPI ID is required';
-    } else if (!formData.upiId.includes('@')) {
-      errors.upiId = 'Please enter a valid UPI ID';
+      errors.upiId = "UPI ID is required";
+    } else if (!formData.upiId.includes("@")) {
+      errors.upiId = "Please enter a valid UPI ID";
     }
-    
+
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
     // Clear validation error when user types
     if (validationErrors[name]) {
-      setValidationErrors(prev => {
+      setValidationErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[name];
         return newErrors;
@@ -65,44 +66,46 @@ const CardForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       toast({
         title: "Form validation failed",
         description: "Please check the form and try again.",
-        variant: "destructive"
+        variant: "destructive",
       });
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Create new card
       const newCard: CardData = {
         ...formData,
         id: generateCardId(),
-        createdAt: Date.now()
+        createdAt: Date.now(),
       };
-      
+
       // Save card to localStorage
       saveCard(newCard);
-      
+
       toast({
         title: "Card created successfully!",
-        description: "Your Eid greeting card has been created. Redirecting to view page...",
+        description:
+          "Your Eid greeting card has been created. Redirecting to view page...",
       });
-      
+
       // Redirect to the card view page
       setTimeout(() => {
         navigate(`/card/${newCard.id}`);
       }, 1500);
     } catch (error) {
-      console.error('Error creating card:', error);
+      console.error("Error creating card:", error);
       toast({
         title: "Failed to create card",
-        description: "An error occurred while creating your card. Please try again.",
-        variant: "destructive"
+        description:
+          "An error occurred while creating your card. Please try again.",
+        variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
@@ -126,17 +129,19 @@ const CardForm: React.FC = () => {
           {showPreview ? "Hide Preview" : "Show Preview"}
         </Button>
       </div>
-      
+
       {showPreview && (
         <div className="mb-6">
-          <CardPreview cardData={{
-            ...formData,
-            id: 'preview',
-            createdAt: Date.now()
-          }} />
+          <CardPreview
+            cardData={{
+              ...formData,
+              id: "preview",
+              createdAt: Date.now(),
+            }}
+          />
         </div>
       )}
-      
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="senderName">Your Name</Label>
@@ -149,10 +154,12 @@ const CardForm: React.FC = () => {
             className={validationErrors.senderName ? "border-red-300" : ""}
           />
           {validationErrors.senderName && (
-            <p className="text-sm text-red-500">{validationErrors.senderName}</p>
+            <p className="text-sm text-red-500">
+              {validationErrors.senderName}
+            </p>
           )}
         </div>
-        
+
         <div className="space-y-2">
           <Label htmlFor="receiverName">Recipient's Name</Label>
           <Input
@@ -164,10 +171,12 @@ const CardForm: React.FC = () => {
             className={validationErrors.receiverName ? "border-red-300" : ""}
           />
           {validationErrors.receiverName && (
-            <p className="text-sm text-red-500">{validationErrors.receiverName}</p>
+            <p className="text-sm text-red-500">
+              {validationErrors.receiverName}
+            </p>
           )}
         </div>
-        
+
         <div className="space-y-2">
           <Label htmlFor="message">Your Message</Label>
           <Textarea
@@ -187,7 +196,7 @@ const CardForm: React.FC = () => {
             <p className="text-sm text-red-500">{validationErrors.message}</p>
           )}
         </div>
-        
+
         <div className="space-y-2">
           <Label htmlFor="upiId">Your UPI ID</Label>
           <Input
@@ -198,12 +207,14 @@ const CardForm: React.FC = () => {
             placeholder="yourname@upi"
             className={validationErrors.upiId ? "border-red-300" : ""}
           />
-          <p className="text-xs text-gray-500">This will be used to generate the payment QR code</p>
+          <p className="text-xs text-gray-500">
+            This will be used to generate the payment QR code
+          </p>
           {validationErrors.upiId && (
             <p className="text-sm text-red-500">{validationErrors.upiId}</p>
           )}
         </div>
-        
+
         <Button
           type="submit"
           className="w-full bg-eid-green hover:bg-opacity-90 text-white"

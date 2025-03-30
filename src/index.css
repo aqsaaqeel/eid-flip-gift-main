@@ -91,8 +91,9 @@
 
 @layer components {
   .card-container {
-    @apply relative w-full mx-auto max-w-sm aspect-[3/4] perspective-1000;
+    @apply relative w-full max-w-xs sm:max-w-sm mx-auto aspect-[2/3] perspective-1000;
   }
+  
 
   .card-inner {
     @apply relative w-full h-full transform-gpu transition-transform duration-700 transform-style-3d;

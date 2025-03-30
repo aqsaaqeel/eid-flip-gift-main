@@ -118,13 +118,13 @@ const ViewCard = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 py-8 md:py-12 px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-8">
+        <div className="mb-4 mt-4">
           <Link
             to="/"
             className="inline-flex items-center text-gray-600 hover:text-gray-900"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Home
+            Create your own card
           </Link>
         </div>
 
@@ -142,14 +142,6 @@ const ViewCard = () => {
             </p>
 
             <div className="space-y-6">
-              <div>
-                <h3 className="text-sm font-medium text-gray-700 mb-2">
-                  Card Message:
-                </h3>
-                <p className="p-4 bg-gray-50 rounded-lg border border-gray-100 text-gray-800">
-                  "{card.message}"
-                </p>
-              </div>
 
               <div className="space-y-4 p-4 bg-white rounded-2xl shadow-sm border border-gray-100">
                 <p className="text-gray-700 text-sm font-medium text-center">

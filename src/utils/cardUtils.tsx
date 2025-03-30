@@ -73,7 +73,7 @@ export const generateUpiLink = (
 };
 
 // Generate QR code component
-export const generateQRCode = (
+export const  generateQRCode = (
   upiId: string,
   size: number = 150
 ): ReactNode => {
@@ -94,9 +94,9 @@ export const generateQRCode = (
         href={upiLink}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-block px-4 py-2 text-sm font-medium text-white bg-eid-gold rounded-lg shadow hover:bg-opacity-90 transition duration-200"
+        className="inline-block px-4 py-2 text-xs font-small text-white bg-eid-gold rounded-lg shadow hover:bg-opacity-90 transition duration-200"
       >
-        💸 tap here and send via Google Pay
+        💸 tap here and send via UPI
       </a>
     </div>
   );
