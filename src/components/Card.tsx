@@ -16,8 +16,7 @@ const Card: React.FC<CardProps> = ({
 }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [hasFlipped, setHasFlipped] = useState(false);
-  const history = window.history;
-  console.log('aqsa history', history);
+
   useEffect(() => {
     if (autoFlip && !hasFlipped) {
       const timer = setTimeout(() => {
@@ -49,8 +48,25 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div className="card-container" onClick={handleCardClick}>
-      <div className={`card-inner ${isFlipped ? "flipped" : ""}`}>
-        <div className="card-front flex flex-col items-center justify-center p-6 sm:p-8 islamic-pattern">
+      <div
+        className={`card-inner ${isFlipped ? "flipped" : ""}`}
+        style={{
+          WebkitTransformStyle: "preserve-3d",
+          transformStyle: "preserve-3d",
+          WebkitPerspective: "1000px",
+          perspective: "1000px",
+        }}
+      >
+        <div
+          className="card-front flex flex-col items-center justify-center p-6 sm:p-8 islamic-pattern"
+          style={{
+            WebkitBackfaceVisibility: "hidden",
+            backfaceVisibility: "hidden",
+            WebkitTransformStyle: "preserve-3d",
+            transformStyle: "preserve-3d",
+          }}
+        >
+          I
           <div className="absolute top-8 left-1/2 -translate-x-1/2">
             <div className="lantern">
               <div className="lantern-string"></div>
@@ -60,7 +76,6 @@ const Card: React.FC<CardProps> = ({
               </div>
             </div>
           </div>
-
           <div className="relative z-10 flex flex-col items-center text-center space-y-5 mt-1">
             <div className="flex space-x-10 justify-center mb-4">
               <div className="lantern scale-75 -translate-x-6">
@@ -105,10 +120,10 @@ const Card: React.FC<CardProps> = ({
               </span>
             </p>
             <div>
-                <p className="pl-2 pr-2 bg-gray-50 rounded-lg border border-gray-100 text-gray-800">
-                  {cardData.message}
-                </p>
-              </div>
+              <p className="pl-2 pr-2 bg-gray-50 rounded-lg border border-gray-100 text-gray-800">
+                {cardData.message}
+              </p>
+            </div>
             <div
               className="pt-2 sm:pt-4 animate-fade-in"
               style={{ animationDelay: "0.5s" }}
@@ -134,7 +149,17 @@ const Card: React.FC<CardProps> = ({
         </div>
 
         {/* Back of the card */}
-        <div className="card-back flex flex-col items-center justify-center p-6 sm:p-8 bg-white">
+        <div
+          className="card-back flex flex-col items-center justify-center p-6 sm:p-8 bg-white"
+          style={{
+            WebkitBackfaceVisibility: "hidden",
+            backfaceVisibility: "hidden",
+            WebkitTransform: "rotateY(180deg)",
+            transform: "rotateY(180deg)",
+            WebkitTransformStyle: "preserve-3d",
+            transformStyle: "preserve-3d",
+          }}
+        >
           <div className="w-full h-full flex flex-col items-center justify-center space-y-4">
             <p className="text-base sm:text-lg font-medium text-eid-dark mb-4">
               {cardData.message}
