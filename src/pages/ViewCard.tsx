@@ -128,7 +128,7 @@ const ViewCard = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div onClick={(e) => e.stopPropagation()} className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div className="flex justify-center">
             <Card cardData={card} />
           </div>

@@ -1,6 +1,7 @@
 import { QRCodeSVG } from "qrcode.react";
 import { ReactNode } from "react";
 import { db, collection, doc, setDoc, getDoc } from "./firebaseConfig";
+import { Link } from "react-router-dom";
 
 export interface CardData {
   id: string;
@@ -73,30 +74,38 @@ export const generateUpiLink = (
 };
 
 // Generate QR code component
-export const  generateQRCode = (
+export const generateQRCode = (
   upiId: string,
   size: number = 150
 ): ReactNode => {
   const upiLink = generateUpiLink(upiId);
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <p>Scan QR to send Eidi OR</p>
+    <div
+      className="flex flex-col items-center gap-4 p-4 bg-white rounded-2xl shadow-lg"
+      onClick={(e) => e.stopPropagation()} // prevent flip
+    >
+      <p className="text-center text-sm font-medium text-gray-700">
+        Scan to send Eidi or tap below
+      </p>
+
       <QRCodeSVG
         value={upiLink}
         size={size}
-        bgColor={"#FFFFFF"}
-        fgColor={"#000000"}
-        level={"H"}
+        bgColor="#ffffff"
+        fgColor="#000000"
+        level="H"
+        className="rounded-lg border p-2"
       />
 
       <a
         href={upiLink}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-block px-4 py-2 text-xs font-small text-white bg-eid-gold rounded-lg shadow hover:bg-opacity-90 transition duration-200"
+        onClick={(e) => e.stopPropagation()}
+        className="mt-2 inline-block px-4 py-2 text-sm font-semibold text-white bg-eid-gold rounded-full shadow-md hover:bg-opacity-90 transition cursor-pointer"
       >
-        💸 tap here and send via UPI
+        💸 Tap here & send via UPI
       </a>
     </div>
   );
@@ -151,4 +160,3 @@ const fallbackCopy = (text: string): boolean => {
     return false;
   }
 };
-
