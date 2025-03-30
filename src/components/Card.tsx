@@ -51,10 +51,12 @@ const Card: React.FC<CardProps> = ({
       <div
         className={`card-inner ${isFlipped ? "flipped" : ""}`}
         style={{
-          WebkitTransformStyle: "preserve-3d",
           transformStyle: "preserve-3d",
-          WebkitPerspective: "1000px",
-          perspective: "1000px",
+          WebkitBackfaceVisibility: "hidden", 
+          WebkitTransformStyle: "preserve-3d",
+          transition: "transform 0.7s",
+          transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          willChange: "transform",
         }}
       >
         <div
@@ -64,6 +66,9 @@ const Card: React.FC<CardProps> = ({
             backfaceVisibility: "hidden",
             WebkitTransformStyle: "preserve-3d",
             transformStyle: "preserve-3d",
+            opacity: isFlipped ? 0 : 1,
+            pointerEvents: isFlipped ? 'none' : 'auto',
+            transition: 'opacity 0.2s ease-in-out',
           }}
         >
           I
@@ -152,12 +157,8 @@ const Card: React.FC<CardProps> = ({
         <div
           className="card-back flex flex-col items-center justify-center p-6 sm:p-8 bg-white"
           style={{
-            WebkitBackfaceVisibility: "hidden",
-            backfaceVisibility: "hidden",
-            WebkitTransform: "rotateY(180deg)",
-            transform: "rotateY(180deg)",
-            WebkitTransformStyle: "preserve-3d",
-            transformStyle: "preserve-3d",
+            backfaceVisibility:'hidden',
+            willChange: "transform",
           }}
         >
           <div className="w-full h-full flex flex-col items-center justify-center space-y-4">
