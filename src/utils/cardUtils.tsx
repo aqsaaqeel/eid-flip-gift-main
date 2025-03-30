@@ -119,11 +119,36 @@ export const getShareUrl = (cardId: string): string => {
 
 // Copy text to clipboard
 export const copyToClipboard = async (text: string): Promise<boolean> => {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (err) {
+      console.error("Failed to copy using Clipboard API: ", err);
+      return fallbackCopy(text);
+    }
+  } else {
+    console.warn("Clipboard API not supported, using fallback.");
+    return fallbackCopy(text);
+  }
+};
+
+// fallback using execCommand (for older browsers)
+const fallbackCopy = (text: string): boolean => {
   try {
-    await navigator.clipboard.writeText(text);
-    return true;
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed"; // avoid scrolling to bottom
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+
+    const success = document.execCommand("copy");
+    document.body.removeChild(textarea);
+    return success;
   } catch (err) {
-    console.error("Failed to copy: ", err);
+    console.error("Fallback copy failed: ", err);
     return false;
   }
 };
+

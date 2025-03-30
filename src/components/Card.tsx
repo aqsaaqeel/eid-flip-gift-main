@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { CardData, generateQRCode } from "../utils/cardUtils";
 import { Gift } from "lucide-react";
 import { Link } from "react-router-dom";
+import SparkleTrail from "./SparkleTrail";
 
 interface CardProps {
   cardData: CardData;
@@ -16,6 +17,8 @@ const Card: React.FC<CardProps> = ({
 }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [hasFlipped, setHasFlipped] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     if (autoFlip && !hasFlipped) {
@@ -47,7 +50,8 @@ const Card: React.FC<CardProps> = ({
   };
 
   return (
-    <div className="card-container" onClick={handleCardClick}>
+    <div ref={cardRef} className="card-container" onClick={handleCardClick}>
+      <SparkleTrail trigger={isFlipped} boundsRef={cardRef} />
       <div
         className={`card-inner ${isFlipped ? "flipped" : ""}`}
         style={{

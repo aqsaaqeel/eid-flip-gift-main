@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CardData, generateCardId, saveCard } from "../utils/cardUtils";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import CardPreview from "./CardPreview";
+import SparkleTrail from "./SparkleTrail";
 
 const CardForm: React.FC = () => {
   const [formData, setFormData] = useState<Omit<CardData, "id" | "createdAt">>({
@@ -20,6 +21,8 @@ const CardForm: React.FC = () => {
     Record<string, string>
   >({});
   const [showPreview, setShowPreview] = useState(false);
+  const sparkleRef = useRef<HTMLDivElement>(null);
+  const [sparkleTrigger, setSparkleTrigger] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -94,6 +97,7 @@ const CardForm: React.FC = () => {
         description:
           "Your Eid greeting card has been created. Redirecting to view page...",
       });
+      setSparkleTrigger(true); // Fire sparkles
 
       // Redirect to the card view page
       setTimeout(() => {
@@ -143,7 +147,9 @@ const CardForm: React.FC = () => {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="space-y-2">
+        <div ref={sparkleRef} className="space-y-2">
+          <SparkleTrail trigger={sparkleTrigger} boundsRef={sparkleRef} />
+
           <Label htmlFor="senderName">Your Name</Label>
           <Input
             id="senderName"
