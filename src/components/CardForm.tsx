@@ -146,13 +146,13 @@ const CardForm: React.FC = () => {
         <div ref={sparkleRef} className="space-y-2">
           <SparkleTrail trigger={sparkleTrigger} boundsRef={sparkleRef} />
 
-          <Label htmlFor="senderName">Your Name</Label>
+          <Label htmlFor="senderName">Your Mubarak Name</Label>
           <Input
             id="senderName"
             name="senderName"
             value={formData.senderName}
             onChange={handleInputChange}
-            placeholder="Enter your name"
+            placeholder="Your name"
             className={validationErrors.senderName ? "border-red-300" : ""}
           />
           {validationErrors.senderName && (
@@ -163,13 +163,13 @@ const CardForm: React.FC = () => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="receiverName">Recipient's Name</Label>
+          <Label htmlFor="receiverName">Recipient's Name (Optional)</Label>
           <Input
             id="receiverName"
             name="receiverName"
             value={formData.receiverName}
             onChange={handleInputChange}
-            placeholder="Enter recipient's name"
+            placeholder="Person you're sending the card too"
             className={validationErrors.receiverName ? "border-red-300" : ""}
           />
           <p className="text-sm text-red-500">
@@ -178,18 +178,18 @@ const CardForm: React.FC = () => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="message">Your Message</Label>
+          <Label htmlFor="message">Small message (Optional)</Label>
           <Textarea
             id="message"
             name="message"
             value={formData.message}
             onChange={handleInputChange}
-            placeholder="Enter your Eid greeting message"
+            placeholder={` Eid Mubarak! Remember when you used to give me Eidi? Those were the days..`}
             className={validationErrors.message ? "border-red-300" : ""}
             rows={3}
           />
           <p className="text-xs text-gray-500 flex justify-between">
-            <span>Brief message for the recipient</span>
+            <span>Wishes for your friends/family</span>
             <span>{formData.message.length}/100</span>
           </p>
           {validationErrors.message && (
