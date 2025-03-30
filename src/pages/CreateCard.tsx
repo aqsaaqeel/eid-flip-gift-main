@@ -15,9 +15,9 @@ const CreateCard = () => {
             <Stars className="h-5 w-5 text-eid-gold opacity-80" />
           </div>
           
-          <h1 className="text-3xl font-bold text-eid-dark mb-2">Eid Mubarak</h1>
+          <h1 className="text-3xl font-bold text-eid-dark mb-2">Eidi Please</h1>
           <p className="text-gray-600 max-w-xs mx-auto text-sm">
-            Create your personalized Eid greeting card with UPI payment option
+            Eid Mubarak fam. Let's normalise sending eidi to people in their 20s too.
           </p>
         </div>
         
