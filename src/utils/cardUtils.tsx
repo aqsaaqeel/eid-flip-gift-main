@@ -1,6 +1,5 @@
-
-import { QRCodeSVG } from 'qrcode.react';
-import { ReactNode } from 'react';
+import { QRCodeSVG } from "qrcode.react";
+import { ReactNode } from "react";
 import { db, collection, doc, setDoc, getDoc } from "./firebaseConfig";
 
 export interface CardData {
@@ -14,8 +13,10 @@ export interface CardData {
 
 // Generate a unique ID for each card
 export const generateCardId = (): string => {
-  return Math.random().toString(36).substring(2, 15) + 
-         Math.random().toString(36).substring(2, 15);
+  return (
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15)
+  );
 };
 
 // Save card data to localStorage
@@ -30,7 +31,7 @@ export const saveCard = async (cardData: CardData): Promise<void> => {
 
 // Get all cards from localStorage
 export const getCards = (): CardData[] => {
-  const cards = localStorage.getItem('eidCards');
+  const cards = localStorage.getItem("eidCards");
   return cards ? JSON.parse(cards) : [];
 };
 
@@ -53,43 +54,61 @@ export const getCardById = async (id: string): Promise<CardData | null> => {
 };
 
 // Generate UPI payment link
-export const generateUpiLink = (upiId: string, amount?: number, note?: string): string => {
+export const generateUpiLink = (
+  upiId: string,
+  amount?: number,
+  note?: string
+): string => {
   let upiLink = `upi://pay?pa=${encodeURIComponent(upiId)}`;
-  
+
   if (amount) {
     upiLink += `&am=${amount}`;
   }
-  
+
   if (note) {
     upiLink += `&tn=${encodeURIComponent(note)}`;
   }
-  
+
   return upiLink;
 };
 
 // Generate QR code component
-export const generateQRCode = (upiId: string, size: number = 150): ReactNode => {
+export const generateQRCode = (
+  upiId: string,
+  size: number = 150
+): ReactNode => {
   const upiLink = generateUpiLink(upiId);
-  
+
   return (
-    <QRCodeSVG 
-      value={upiLink}
-      size={size}
-      bgColor={"#FFFFFF"}
-      fgColor={"#000000"}
-      level={"H"}
-      includeMargin={false}
-    />
+    <div className="flex flex-col items-center gap-4">
+      <p>Scan QR to send Eidi OR</p>
+      <QRCodeSVG
+        value={upiLink}
+        size={size}
+        bgColor={"#FFFFFF"}
+        fgColor={"#000000"}
+        level={"H"}
+      />
+
+      <a
+        href={upiLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block px-4 py-2 text-sm font-medium text-white bg-eid-gold rounded-lg shadow hover:bg-opacity-90 transition duration-200"
+      >
+        💸 tap here and send via Google Pay
+      </a>
+    </div>
   );
 };
 
 // Format timestamp to readable date
 export const formatDate = (timestamp: number): string => {
   const date = new Date(timestamp);
-  return date.toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 };
 
@@ -104,7 +123,7 @@ export const copyToClipboard = async (text: string): Promise<boolean> => {
     await navigator.clipboard.writeText(text);
     return true;
   } catch (err) {
-    console.error('Failed to copy: ', err);
+    console.error("Failed to copy: ", err);
     return false;
   }
 };
