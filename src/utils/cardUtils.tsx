@@ -54,31 +54,43 @@ export const getCardById = async (id: string): Promise<CardData | null> => {
   }
 };
 
-// Generate UPI payment link
 export const generateUpiLink = (
   upiId: string,
   amount?: number,
-  note?: string
+  note?: string,
+  app: "gpay" | "phonepe" | "upi" = "upi"
 ): string => {
-  let upiLink = `upi://pay?pa=${encodeURIComponent(upiId)}`;
+  const encodedNote = note ? encodeURIComponent(note) : "";
+  const encodedAmount = amount ? encodeURIComponent(amount.toString()) : "";
+  const name = "GoGirl"; // Optional: can customize sender name
 
-  if (amount) {
-    upiLink += `&am=${amount}`;
+  const params = `pa=${upiId}&pn=${encodeURIComponent(name)}${
+    encodedNote ? `&tn=${encodedNote}` : ""
+  }${encodedAmount ? `&am=${encodedAmount}` : ""}&cu=INR`;
+
+  switch (app) {
+    case "gpay":
+      return `tez://upi/pay?${params}`;
+    case "phonepe":
+      return `phonepe://pay?${params}`;
+    default:
+      return `upi://pay?${params}`;
   }
-
-  if (note) {
-    upiLink += `&tn=${encodeURIComponent(note)}`;
-  }
-
-  return upiLink;
 };
 
 // Generate QR code component
 export const generateQRCode = (
   upiId: string,
-  size: number = 150
+  size: number = 150,
+  amount?: number,
+  note?: string
 ): ReactNode => {
-  const upiLink = generateUpiLink(upiId);
+  const upiLink = generateUpiLink(upiId, amount, note);
+
+  const handleUpiTap = () => {
+    // Open UPI link via location change to trigger UPI app
+    window.location.href = upiLink;
+  };
 
   return (
     <div
@@ -98,15 +110,19 @@ export const generateQRCode = (
         className="rounded-lg border p-2"
       />
 
-      <a
-        href={upiLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={(e) => e.stopPropagation()}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          handleUpiTap();
+        }}
         className="mt-2 inline-block px-4 py-2 text-sm font-semibold text-white bg-eid-gold rounded-full shadow-md hover:bg-opacity-90 transition cursor-pointer"
       >
         💸 Tap here & send via UPI
-      </a>
+      </button>
+
+      <p className="text-xs text-gray-500 text-center">
+        If nothing happens, try scanning the QR.
+      </p>
     </div>
   );
 };
