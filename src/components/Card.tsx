@@ -37,9 +37,11 @@ const Card: React.FC<CardProps> = ({
   }, [autoFlip, hasFlipped]);
 
   const handleCardClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const clickedInsideNoFlip = (e.target as HTMLElement).closest("[data-no-flip]");
+    const clickedInsideNoFlip = (e.target as HTMLElement).closest(
+      "[data-no-flip]"
+    );
     if (clickedInsideNoFlip || isPreview) return;
-    setIsFlipped(prev => !prev);
+    setIsFlipped((prev) => !prev);
   };
 
   const formatName = (name: string) => {
@@ -89,7 +91,10 @@ const Card: React.FC<CardProps> = ({
                   <div className="lantern-glow"></div>
                 </div>
               </div>
-              <div className="lantern scale-75 translate-x-6" style={{ animationDelay: "0.5s" }}>
+              <div
+                className="lantern scale-75 translate-x-6"
+                style={{ animationDelay: "0.5s" }}
+              >
                 <div className="lantern-string"></div>
                 <div className="lantern-top"></div>
                 <div className="lantern-body">
@@ -102,15 +107,23 @@ const Card: React.FC<CardProps> = ({
               Eid Mubarak
             </h1>
             <div className="w-20 h-0.5 bg-eid-gold animate-fade-in"></div>
-            <p className="text-gray-600 animate-fade-in">
-              To <span className="font-medium text-eid-dark">{formatName(cardData.receiverName)}</span>
-            </p>
+            {cardData.receiverName && (
+              <p className="text-gray-600 animate-fade-in">
+                To{" "}
+                <span className="font-medium text-eid-dark">
+                  {formatName(cardData.receiverName)}
+                </span>
+              </p>
+            )}
+
             <p className="pl-2 pr-2 bg-gray-50 rounded-lg border border-gray-100 text-gray-800">
               {cardData.message}
             </p>
             <div className="pt-2 sm:pt-4 animate-fade-in">
               <p className="text-sm text-gray-500 mb-1">From</p>
-              <p className="font-medium text-eid-dark">{formatName(cardData.senderName)}</p>
+              <p className="font-medium text-eid-dark">
+                {formatName(cardData.senderName)}
+              </p>
             </div>
 
             {!isPreview && (
@@ -138,10 +151,12 @@ const Card: React.FC<CardProps> = ({
             {cardData.message}
           </p>
 
-          <div data-no-flip className="bg-white p-2 rounded-lg shadow-sm border border-gray-100 cursor-pointer">
+          <div
+            data-no-flip
+            className="bg-white p-2 rounded-lg shadow-sm border border-gray-100 cursor-pointer"
+          >
             {generateQRCode(cardData.upiId)}
           </div>
-
 
           {!isPreview && (
             <Link

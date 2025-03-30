@@ -33,10 +33,6 @@ const CardForm: React.FC = () => {
       errors.senderName = "Your name is required";
     }
 
-    if (!formData.receiverName.trim()) {
-      errors.receiverName = "Recipient name is required";
-    }
-
     if (formData.message.length > 100) {
       errors.message = "Message must be less than 100 characters";
     }
@@ -176,11 +172,9 @@ const CardForm: React.FC = () => {
             placeholder="Enter recipient's name"
             className={validationErrors.receiverName ? "border-red-300" : ""}
           />
-          {validationErrors.receiverName && (
-            <p className="text-sm text-red-500">
-              {validationErrors.receiverName}
-            </p>
-          )}
+          <p className="text-sm text-red-500">
+            {validationErrors.receiverName}
+          </p>
         </div>
 
         <div className="space-y-2">

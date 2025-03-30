@@ -83,7 +83,7 @@ export const generateQRCode = (
   return (
     <div
       className="flex flex-col items-center gap-4 p-4 bg-white rounded-2xl shadow-lg"
-      onClick={(e) => e.stopPropagation()} // prevent flip
+      onClick={(e) => e.stopPropagation()}
     >
       <p className="text-center text-sm font-medium text-gray-700">
         Scan to send Eidi or tap below
